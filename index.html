@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="style.css" />
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 
-    <title>Tetris</title>
-    <script  src="Tetris.js" type='text/javascript' > </script>
+	<title>Tetris</title>
+	<script  src="Tetris.js" type='text/javascript' > </script>
 	<script  src="Pixel.js" type='text/javascript' > </script>
 	<script  src="Tetrimino.js" type='text/javascript' > </script>
 
@@ -25,10 +25,9 @@
 	var tetris = new Tetris();
 
 	function init(){
-		console.log("start");
-		tetris.setScore("tetrisScore");
-		tetris.setNext("tetrisNext");
-		tetris.init("tetrisConteneur");
+		tetris.setScore("tetrisScore");	// définit la zone ou afficher le score
+		tetris.setNext("tetrisNext");	// définit la zone ou afficher le prochain tetrimino
+		tetris.init("tetrisConteneur");	// définit la zone ou afficher le jeu et le lance
 	}
 </script>
 </html>
