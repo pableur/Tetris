@@ -22,6 +22,7 @@ function Tetrimino(conteneur,maxPos){
 		if(tetrimino=='S'){this.S(id,pos);return;}
 	}
 
+	// deplace le tetrimini en vérifiant si il n'y a pas contact avec les autres tetrimino et si le tetrimino n'est pas arrivé en bas
 	this.move=function(pos,listTetrimino){
 		if(listTetrimino){			
 			for (var i=0; i<listTetrimino.length; i++){
@@ -37,9 +38,6 @@ function Tetrimino(conteneur,maxPos){
 				return false;
 			if (position[0]+widthPixel>this.maxWidth[1])
 				return false;
-				/*
-			if (position[1]<this.maxHeight[0])
-				return false;*/
 			if (position[1]+widthPixel>this.maxHeight[1])
 				return "bas";
 		}
@@ -49,6 +47,7 @@ function Tetrimino(conteneur,maxPos){
 		return true;
 	}
 	
+	// controle si il y a contact entre ce tetrimino et les autres dans la position future
 	this.contact=function(tetrimino,pos){
 		for (var i=0; i<this.idPixel.length; i++){
 			for (var j=0; j<tetrimino.idPixel.length; j++){
@@ -60,16 +59,23 @@ function Tetrimino(conteneur,maxPos){
 		return false;
 	}
 	
+	// supprime un pixel du tetrimino, utilisé pour supprimé une ligne
 	this.deletePixel=function(id){
 		this.idPixel[id].delete();
 		this.idPixel.splice(id,1);
 	}
+	
+	// suprime tout le tétrimino
 	this.delete=function(){
 		for(var id=this.idPixel.length;id>=0;id--){
 			this.idPixel[id].delete();
 			this.idPixel.splice(id,1);
 		}
 	}
+	
+	/*
+	Methode qui permet de tourner le tetrimini
+	*/
 	
 	this.turn=function(){
 		switch(this.tetrimino){
@@ -182,7 +188,9 @@ function Tetrimino(conteneur,maxPos){
 		}
 		return true;
 	}
-	
+	/*
+	Créer le tétrimino, composé de pixel
+	*/
 	this.O=function(id,pos){
 		couleur="yellow";
 		id=id+"O";
