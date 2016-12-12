@@ -1,3 +1,8 @@
+/*
+Objet Pixel : il compose les tetriminos
+
+*/
+
 function Pixel(conteneur,taille,position,couleur,id){
 	var border=0.2;
 	this.id=id;
@@ -16,6 +21,7 @@ function Pixel(conteneur,taille,position,couleur,id){
 	newLink.style.top = position[1]+'px';
 	document.getElementById(conteneur).appendChild(newLink);
     
+	// controle si il y a contact entre deux pixels dans une position future
 	this.contact=function(pixel,pos){
 		var pos = this.futureMove(pos);
 		var posX=pos[0];
@@ -24,8 +30,9 @@ function Pixel(conteneur,taille,position,couleur,id){
 		pos = pixel.position(pos);
 		var posX2=pos[0];
 		var posY2=pos[1];			
-		//console.log(posX+" "+posY+ " ; "+posX2+" "+posY2);
-		if(	   ( posX2>=(posX+this.width)) 
+		
+		
+		if(( posX2>=(posX+this.width)) 
 			|| ((posX2+pixel.width) <= posX)
 			|| ( posY2 >=posY+this.height)
 			|| ((posY2+pixel.height)<=posY)){			
@@ -39,23 +46,24 @@ function Pixel(conteneur,taille,position,couleur,id){
 		}
 		
 	}
-	this.move=function(position){
-		/*
-		var link=document.getElementById(this.id);
-		var newPosX=parseInt(link.style.left.split('px')[0])+position[0];
-		var newPosY=parseInt(link.style.top.split('px')[0])+position[1];
-		*/
+	
+	// déplace le pixel
+	this.move=function(position){		
 		var link=document.getElementById(this.id);
 		var newPos=this.futureMove(position);
 		link.style.left=newPos[0]+'px';
 		link.style.top=newPos[1]+'px';
 	}
+	
+	// calcul la future position du puxel
 	this.futureMove=function(position){
 		var link=document.getElementById(this.id);
 		var newPosX=parseInt(link.style.left.split('px')[0])+position[0];
 		var newPosY=parseInt(link.style.top.split('px')[0])+position[1];
 		return [newPosX,newPosY]
 	}
+	
+	// retourne la position actuelle du pixel
 	this.position=function(){
 		var link=document.getElementById(this.id);
 		var newPosX=parseInt(link.style.left.split('px')[0]);
