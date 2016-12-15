@@ -15,6 +15,7 @@
 		<div style="display: block; margin-left:400px">			
 			<div id="tetrisScore" style="display: inline-block;width : 50px;"></div>
 			<div id="tetrisNext" style="display: inline-block;width : 50px; position:relative"></div>
+			<div id="tetrisCoup" style="display: inline-block;width : 50px;"></div>
 		</div>
 		<div style="display: block;">
 			<div id="tetrisConteneur"></div>
@@ -27,6 +28,7 @@
 	function init(){
 		tetris.setScore("tetrisScore");	// définit la zone ou afficher le score
 		tetris.setNext("tetrisNext");	// définit la zone ou afficher le prochain tetrimino
+		tetris.setCoup("tetrisCoup");	// définit la zone ou afficher le coup éffectué
 		tetris.init("tetrisConteneur");	// définit la zone ou afficher le jeu et le lance
 	}
 </script>
