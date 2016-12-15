@@ -23,6 +23,10 @@ function Tetris(conteneur){
 	this.nextTetrimino=0;
 	var nextTetriminoObjet=null;
 	
+	
+	var nameCoup=["simple", "double", "triple", "tetris"];
+	var valueCoup=[10, 30, 50, 100];
+	
 	document.onkeydown = applyKey;
 	document.onkeyup  = applyKeyUp;
 	
@@ -64,6 +68,7 @@ function Tetris(conteneur){
 	}
 	this.ligneComplete=function(){
 		var pixelLigne=[];
+		var nbLigne = 0;
 		for(var i=0; i<height;i++){
 			pixelLigne.push(0);
 		}
@@ -80,8 +85,8 @@ function Tetris(conteneur){
 		for(var ligne=0; ligne<height;ligne++){
 			if(pixelLigne[ligne]==width){
 				console.log("ligne complete");
-				this.scoreValue=this.scoreValue+10;
-				this.updateScore();
+				nbLigne=nbLigne+1;
+				
 				//supprime les lignes
 				for(var i=0;i<listTetrimino.length; i++){
 					var tempTetrimino=listTetrimino[i];
@@ -114,6 +119,7 @@ function Tetris(conteneur){
 				}
 			}
 		}
+		return nbLigne;
 	}
 
 	this.updateScore=function(){
@@ -142,7 +148,14 @@ function Tetris(conteneur){
 		}
 		else if(returnValue=="bas" ){			
 			moveMax=false;
-			this.ligneComplete();
+			var nbLigne = this.ligneComplete();
+			if(nbLigne>0){
+				console.log(nameCoup[nbLigne-1]);
+				this.scoreValue=this.scoreValue+valueCoup[nbLigne-1];
+				this.updateScore();
+				vitesse=vitesse-this.scoreValue/10;
+			}
+			
 			//listTetrimino[tetriminoCourant].deletePixel(0);
 			tetriminoCourant++;
 			listTetrimino.push( new Tetrimino(screenID,[0,0,width*widthPixel,height*heightPixel]));
@@ -209,7 +222,7 @@ function Tetris(conteneur){
 
 			deplacement=widthPixel;
 			
-			// 3° --- Map the keyCode in another keyCode not used
+			// 3Â° --- Map the keyCode in another keyCode not used
 			winObj.keyCode = intKeyCode = REMAP_KEY_T;
 			winObj.returnValue = false;
 			return false;
@@ -218,27 +231,27 @@ function Tetris(conteneur){
 			
 			deplacement=widthPixel*-1;
 			
-			// 3° --- Map the keyCode in another keyCode not used
+			// 3Â° --- Map the keyCode in another keyCode not used
 			winObj.keyCode = intKeyCode = REMAP_KEY_T;
 			winObj.returnValue = false;
 			return false;
 		}
 		else if ( intKeyCode == KEY_UP ){
 			turn();			
-			// 3° --- Map the keyCode in another keyCode not used
+			// 3Â° --- Map the keyCode in another keyCode not used
 			winObj.keyCode = intKeyCode = REMAP_KEY_T;
 			winObj.returnValue = false;
 			return false;
 		}	
 		else if(intKeyCode == KEY_SH_TAB || intKeyCode == KEY_DOWN){
 			vitesse=vitesseRapide;
-			// 3° --- Map the keyCode in another keyCode not used
+			// 3Â° --- Map the keyCode in another keyCode not used
 			winObj.keyCode = intKeyCode = REMAP_KEY_T;
 			winObj.returnValue = false;
 			return false;
 		}else if(intKeyCode == KEY_SPACE){
 			moveMax=true;
-			// 3° --- Map the keyCode in another keyCode not used
+			// 3Â° --- Map the keyCode in another keyCode not used
 			winObj.keyCode = intKeyCode = REMAP_KEY_T;
 			winObj.returnValue = false;
 			return false;
@@ -256,7 +269,7 @@ function Tetris(conteneur){
 			
 		if(intKeyCode == KEY_SH_TAB || intKeyCode == KEY_DOWN){
 			vitesse=vitesseNormal;
-			// 3° --- Map the keyCode in another keyCode not used
+			// 3Â° --- Map the keyCode in another keyCode not used
 			winObj.keyCode = intKeyCode = REMAP_KEY_T;
 			winObj.returnValue = false;
 			return false;
