@@ -17,11 +17,15 @@ function Tetris(conteneur){
 	var moveMax=false;
 	var tempTetriminotempTetrimino=null;
 	var create=false;
-	this.next="";
-	this.score="";
+	
+	this.next=null;
+	this.score=null;
+	var coup=null;
+	
 	this.scoreValue=0;
 	this.nextTetrimino=0;
 	var nextTetriminoObjet=null;
+	var nbCycleAffichage=10;
 	
 	
 	var nameCoup=["simple", "double", "triple", "tetris"];
@@ -35,6 +39,9 @@ function Tetris(conteneur){
 	}
 	this.setScore=function(scoreConteneur){
 		this.score=scoreConteneur;
+	}
+	this.setCoup = function(coupConteneur){
+		coup=coupConteneur;
 	}
 	
 	this.init=function(conteneur){
@@ -122,25 +129,37 @@ function Tetris(conteneur){
 		return nbLigne;
 	}
 
-	this.updateScore=function(){
+	this.updateScore=function(){		
 		console.log(this.scoreValue);
+		if(this.score==null) return;
 		document.getElementById(this.score).innerHTML=this.scoreValue;
 	}
 	
 	this.updateNext=function(){
+		if(this.next==null) return;
 		var myNode = document.getElementById(this.next);
 		while (myNode.firstChild) {
 			myNode.removeChild(myNode.firstChild);
 		}
 		nextTetriminoObjet = new Tetrimino(this.next,[4*widthPixel,2*heightPixel]).create(listTetrimino[tetriminoCourant].list[this.nextTetrimino],'T',[0,0]);
 	}
+
+	this.setText = function(texte){
+		if(coup==null) return;
+		document.getElementById(coup).innerHTML=texte;
+	}
 	
+	var  nbCycle=0;
 	Tetris.prototype.anim=function() {
 		//console.log("move "+step);
 		tempTetrimino=listTetrimino[tetriminoCourant];		
 		var newListTetrimino=listTetrimino.slice(0);		
 		newListTetrimino.splice(tetriminoCourant,1)					
 		var returnValue=tempTetrimino.move([deplacement,10],newListTetrimino);
+		if(nbCycle>0){
+			nbCycle--;
+			if(nbCycle==0)	this.setText("");
+		}
 		if(returnValue!=true)
 			console.log(returnValue);
 		if(returnValue=="bas" && create==true){
@@ -154,6 +173,8 @@ function Tetris(conteneur){
 				this.scoreValue=this.scoreValue+valueCoup[nbLigne-1];
 				this.updateScore();
 				vitesse=vitesse-this.scoreValue/10;
+				this.setText(nameCoup[nbLigne-1]);
+				nbCycle=nbCycleAffichage;
 			}
 			
 			//listTetrimino[tetriminoCourant].deletePixel(0);
