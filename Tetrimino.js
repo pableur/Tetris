@@ -34,10 +34,16 @@ function Tetrimino(conteneur,maxPos){
 		}
 		for (var i=0; i<this.idPixel.length; i++){
 			var position =this.idPixel[i].futureMove(pos);
-			if (position[0]<this.maxWidth[0])
-				return false;
-			if (position[0]+widthPixel>this.maxWidth[1])
-				return false;
+			// si trop a gauche décale à droite		
+			if (position[0]<this.maxWidth[0]){
+				this.move([widthPixel,0],listTetrimino);			
+				//return "gauche";
+			}
+			// si trop a doite décale à gauche	
+			if (position[0]+widthPixel>this.maxWidth[1]){
+				this.move([-widthPixel,0],listTetrimino);
+				//return "droite";
+			}
 			if (position[1]+widthPixel>this.maxHeight[1])
 				return "bas";
 		}
