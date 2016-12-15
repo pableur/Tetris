@@ -130,7 +130,7 @@ function Tetris(conteneur){
 	}
 
 	this.updateScore=function(){		
-		console.log(this.scoreValue);
+		//console.log("score : "+this.scoreValue);
 		if(this.score==null) return;
 		document.getElementById(this.score).innerHTML=this.scoreValue;
 	}
