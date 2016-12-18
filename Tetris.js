@@ -14,7 +14,7 @@ function Tetris(conteneur){
 	var step=0;
 	var deplacement=0;
 	var stop=false;
-	var moveMax=false;
+	
 	var tempTetriminotempTetrimino=null;
 	var create=false;
 	
@@ -152,6 +152,8 @@ function Tetris(conteneur){
 	var  nbCycle=0;
 	Tetris.prototype.anim=function() {
 		//console.log("move "+step);
+		this.scoreValue=Math.trunc(this.scoreValue+(vitesseNormal-vitesse)/200);
+		this.updateScore();
 		tempTetrimino=listTetrimino[tetriminoCourant];		
 		var newListTetrimino=listTetrimino.slice(0);		
 		newListTetrimino.splice(tetriminoCourant,1)					
@@ -165,14 +167,14 @@ function Tetris(conteneur){
 		if(returnValue=="bas" && create==true){
 			this.stop=true;
 		}
-		else if(returnValue=="bas" ){			
-			moveMax=false;
+		else if(returnValue=="bas" ){	
+			vitesse=vitesseNormal-this.scoreValue/10;
 			var nbLigne = this.ligneComplete();
 			if(nbLigne>0){
 				console.log(nameCoup[nbLigne-1]);
 				this.scoreValue=this.scoreValue+valueCoup[nbLigne-1];
 				this.updateScore();
-				vitesse=vitesse-this.scoreValue/10;
+				
 				this.setText(nameCoup[nbLigne-1]);
 				nbCycle=nbCycleAffichage;
 			}
@@ -185,9 +187,7 @@ function Tetris(conteneur){
 			this.updateNext();
 			create=true;						
 		}
-		else if(moveMax==true){		
-				(function() {this.anim();}).bind(this)
-			}
+		
 		else{
 			create=false;
 		}
@@ -199,7 +199,7 @@ function Tetris(conteneur){
 		}
 	}
 	this.turn = function(){
-		listTetrimino[tetriminoCourant].turn();
+		turn();
 	}
 	this.moveLeft = function(){
 		deplacement=-widthPixel;
@@ -207,8 +207,17 @@ function Tetris(conteneur){
 	this.moveRight = function(){
 		deplacement=widthPixel;
 	}
+	this.moveMax = function(){
+		moveMax();
+		}
+	
+	function moveMax(){
+		console.log(listTetrimino.length+" "+tetriminoCourant);
+		vitesse=0;
+	}
+	
 	function turn(){
-		this.turn();
+		listTetrimino[tetriminoCourant].turn();
 	}
 	
 	KEY_DOWN	= 40;
@@ -280,9 +289,11 @@ function Tetris(conteneur){
 			winObj.returnValue = false;
 			return false;
 		}else if(intKeyCode == KEY_SPACE){
-			moveMax=true;
 			// 3° --- Map the keyCode in another keyCode not used
+			moveMax();
 			winObj.keyCode = intKeyCode = REMAP_KEY_T;
+			
+			
 			winObj.returnValue = false;
 			return false;
 		}
