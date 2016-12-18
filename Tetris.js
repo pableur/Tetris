@@ -198,8 +198,17 @@ function Tetris(conteneur){
 			window.setTimeout((function() {this.anim();}).bind(this), vitesse);
 		}
 	}
-	function turn(){
+	this.turn = function(){
 		listTetrimino[tetriminoCourant].turn();
+	}
+	this.moveLeft = function(){
+		deplacement=-widthPixel;
+	}
+	this.moveRight = function(){
+		deplacement=widthPixel;
+	}
+	function turn(){
+		this.turn();
 	}
 	
 	KEY_DOWN	= 40;

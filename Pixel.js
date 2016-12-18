@@ -55,7 +55,7 @@ function Pixel(conteneur,taille,position,couleur,id){
 		link.style.top=newPos[1]+'px';
 	}
 	
-	// calcul la future position du puxel
+	// calcul la future position du pixel
 	this.futureMove=function(position){
 		var link=document.getElementById(this.id);
 		var newPosX=parseInt(link.style.left.split('px')[0])+position[0];
