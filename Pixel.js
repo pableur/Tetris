@@ -26,6 +26,7 @@ function Pixel(conteneur,taille,position,couleur,id){
 		var pos = this.futureMove(pos);
 		var posX=pos[0];
 		var posY=pos[1];
+		//console.log(pos);
 		
 		pos = pixel.position(pos);
 		var posX2=pos[0];
@@ -38,7 +39,8 @@ function Pixel(conteneur,taille,position,couleur,id){
 			|| ((posY2+pixel.height)<=posY)){			
 			return false;
 		}else{
-			if( (posX2<=(posX+this.width)) && ((posX2+pixel.width) >= posX)){
+			if(( posY2 <posY+this.height)
+			|| ((posY2+pixel.height)>posY)){
 				return "bas";
 			}else{
 				return "cote";
